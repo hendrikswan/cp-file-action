@@ -1,0 +1,13 @@
+name: "Copy file"
+description: "Copies a file from a location to another location"
+inputs:
+  from:
+    description: "Where to copy the file from"
+    required: true
+  storage-folder:
+    description: "Where to copy the file to"
+    required: true
+runs:
+  using: "node12"
+  main: "index.js"
+  post: "cleanup.js"
