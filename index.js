@@ -17,7 +17,7 @@ async function action() {
 
 return action()
   .then(() => {
-    core.debug("finished with cp-file-action");
+    core.debug("Finished with cp-file-action");
   })
   .catch((err) => {
     core.setFailed(`Error while executing cp-file-action ${err}`);
