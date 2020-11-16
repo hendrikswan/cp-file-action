@@ -1,28 +1,24 @@
-const core = require('@actions/core');
-const io = require('@actions/io');
-const fs = require('fs')
+const core = require("@actions/core");
+const io = require("@actions/io");
 
 async function action() {
-    const folderToCache = core.getInput('folder-to-cache', { required: true });
-    const cacheTargetFolder = core.getInput('storage-folder', { required: true })
+  const fromPath = core.getInput("from", { required: true });
+  const toPath = core.getInput("to", { required: true });
 
-    core.info(`Attempting to restore cache from ${cacheTargetFolder} to ${folderToCache}`)
+  core.info(`Attempting to copy file from ${fromPath} to ${toPath}`);
 
-    const cachedFolderExists = await fs.existsSync(cacheTargetFolder)
-    if (!cachedFolderExists) {
-        core.info('The cache folder does not exist at path ', cacheTargetFolder)
-        return
-    }
+  await io.cp(fromPath, toPath, {
+    recursive: false,
+    force: true,
+  });
 
-    await io.cp(cacheTargetFolder, folderToCache, { recursive: true, force: false });
-
-    core.info(`Restored cache from ${cacheTargetFolder} to ${folderToCache}`)
+  core.info(`Copied file from ${fromPath} to ${toPath}`);
 }
 
-return action().then(() => {
-    core.debug('finished with local-cache-action')
-}).catch((err) => {
-    core.setFailed(`Error while executing local-cache-action cleanup ${err}`);
-})
-
-
+return action()
+  .then(() => {
+    core.debug("finished with cp-file-action");
+  })
+  .catch((err) => {
+    core.setFailed(`Error while executing cp-file-action ${err}`);
+  });

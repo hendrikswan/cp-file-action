@@ -4,7 +4,7 @@ inputs:
   from:
     description: "Where to copy the file from"
     required: true
-  storage-folder:
+  to:
     description: "Where to copy the file to"
     required: true
 runs:
